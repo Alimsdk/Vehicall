@@ -69,7 +69,7 @@ const updateBookingInfo=async(req:Request,res:Response)=>{
   const { bookingId } = req.params;
   const {id:userId} = req.user as JwtPayload;     
   const {role:userRole} = req.user as JwtPayload;
-  const { action } = req.body;
+  const { status } = req.body;
 
   try {
     // 1. Fetch the booking
@@ -91,7 +91,7 @@ const updateBookingInfo=async(req:Request,res:Response)=>{
       if (booking.user_id !== userId)
         return res.status(403).json({success:false, message: "Forbidden" });
 
-      if (action === "cancel") {
+      if (status === "cancel") {
         if (new Date(booking.start_date) <= now)
           return res
             .status(400)
@@ -116,7 +116,7 @@ const updateBookingInfo=async(req:Request,res:Response)=>{
 
     // ADMIN: Mark as returned
     if (userRole === "admin") {
-      if (action === "return") {
+      if (status === "return") {
         await pool.query(
           "UPDATE bookings SET status = 'returned' WHERE id = $1",
           [bookingId]
