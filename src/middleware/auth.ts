@@ -20,7 +20,7 @@ const auth=(...roles:string[])=>{
 
           if (!token) return res.status(401).json({ message: "No token" });
 
-        const decoded=jwt.verify(token as string,config.jwt_secret as string) as JwtPayload;
+        const decoded=jwt.verify(token as string,process.env.JWTSECRET as string) as JwtPayload;
 
         req.user=decoded;
 
