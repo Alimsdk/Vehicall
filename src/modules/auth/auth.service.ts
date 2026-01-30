@@ -34,7 +34,7 @@ const signInService=async(email:string,password:string)=>{
       return null;
     }
 
-    const token= jwt.sign({id:user.id,name:user.name,email:user.email,role:user.role},config.jwt_secret as string,{
+    const token= jwt.sign({id:user.id,name:user.name,email:user.email,role:user.role},process.env.JWTSECRET as string,{
       expiresIn:"7d"
     });
 
