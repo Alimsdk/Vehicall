@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
 
+export const runtime = "nodejs";
 
 const auth=(...roles:string[])=>{
     return async(req:Request,res:Response,next:NextFunction)=>{

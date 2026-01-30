@@ -2,6 +2,9 @@
 import { pool } from "../../config/db";
 import jwt from "jsonwebtoken";
 import config from "../../config";
+
+
+
  
  const createUserService=async(payload:Record<string,unknown>)=>{
    const {name,email,phone,role,password} = payload;
