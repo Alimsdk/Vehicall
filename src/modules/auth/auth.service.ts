@@ -30,6 +30,10 @@ const signInService=async(email:string,password:string)=>{
       return null;
     }
 
+    if (!config.jwt_secret) {
+  throw new Error('JWT secret is missing');
+    }
+
     const token= jwt.sign({id:user.id,name:user.name,email:user.email,role:user.role},config.jwt_secret as string,{
       expiresIn:"7d"
     });
