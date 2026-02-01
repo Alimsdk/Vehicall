@@ -8,7 +8,7 @@ const auth=(...roles:string[])=>{
     return async(req:Request,res:Response,next:NextFunction)=>{
        try {
         const authHeader=req.headers.authorization as string;
-
+       console.log(authHeader);
         if(!authHeader){
             res.status(500).json({
                 success:false,
@@ -18,11 +18,17 @@ const auth=(...roles:string[])=>{
 
          const token = authHeader.split(" ")[1];
 
-          if (!token) return res.status(401).json({ message: "No token" });
+         console.log(config.jwt_secret,token);
 
-        const decoded=jwt.verify(token as string,process.env.JWTSECRET as string) as JwtPayload;
+          if (!token) return res.status(401).json({ message: "No token" });
+     
+      
+        const decoded=jwt.verify(token as string,config.jwt_secret!) as JwtPayload;
+
 
         req.user=decoded;
+
+        console.log(req.user);
 
          if(roles.length && !roles.includes(decoded.role)){
             return res.status(401).json({

@@ -18,13 +18,18 @@ const MS_PER_DAY=24*60*60*1000;
   const res=await getSingleVehicleService(vehicle_id as string);
 
 
+if(res.rows.length===0){
+  return null;
+}
+  
   const {daily_rent_price}=res.rows[0];
 
-
-  if(res.rows.length===0 || !rentedDays || !daily_rent_price){
+  if( !rentedDays || !daily_rent_price){
    
     return null;
   }
+
+
 
 if (start.getTime() >= end.getTime()) {
   return null;
@@ -53,7 +58,7 @@ const getBookingByUserIdService=async(userId:string)=>{
 }
 
 const getBookingByVehicleIdService=async(vehicleId:string)=>{
-  const result=await pool.query(`SELECT * FROM bookings WHERE id=$1`,[vehicleId]);
+  const result=await pool.query(`SELECT * FROM bookings WHERE vehicle_id=$1`,[vehicleId]);
   return result;
 }
 

@@ -29,12 +29,6 @@ app.use("/api/v1/bookings",bookingRouter);
 
 // wrong route
 
-app.get("/api/env-test", (req, res) => {
-  res.json({
-    JWTSECRET: process.env.JWTSECRET ?? null,
-    jwtKeys: Object.keys(process.env).filter(k => k.includes("JWT"))
-  });
-});
 
 app.use((req,res)=>{
   res.status(404).json({

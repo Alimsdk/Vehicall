@@ -85,12 +85,14 @@ const updateSingleVehicle=async(req:Request,res:Response)=>{
 
 const deleteSingleVehicle=async(req:Request,res:Response)=>{
      try {
-       const bookingsOfVehicle=await getBookingByVehicleIdService(req.params.userId as string);
+       const bookingsOfVehicle=await getBookingByVehicleIdService(req.params.vehicleId as string);
+
+       console.log("vehicle gular booking",bookingsOfVehicle);
 
      if(bookingsOfVehicle.rows.length !== 0){
-            res.status(409).json({
+           return res.status(409).json({
         success:false,
-        message:"User cannot be deleted because they have existing bookings"
+        message:"Vehicle cannot be deleted because they have existing bookings"
      });
      }
      

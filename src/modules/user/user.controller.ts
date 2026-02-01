@@ -70,7 +70,7 @@ const deleteSingleUser=async(req:Request,res:Response)=>{
      const bookingsByUser=await getBookingByUserIdService(req.params.userId as string);
 
      if(bookingsByUser.rows.length !== 0){
-            res.status(409).json({
+           return res.status(409).json({
         success:false,
         message:"User cannot be deleted because they have existing bookings"
      });

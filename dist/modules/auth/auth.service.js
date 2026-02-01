@@ -25,6 +25,10 @@ const signInService = async (email, password) => {
     if (!isPasswordMatched) {
         return null;
     }
+    if (!config_1.default.jwt_secret) {
+        return null;
+    }
+    console.log(config_1.default.jwt_secret);
     const token = jsonwebtoken_1.default.sign({ id: user.id, name: user.name, email: user.email, role: user.role }, config_1.default.jwt_secret, {
         expiresIn: "7d"
     });

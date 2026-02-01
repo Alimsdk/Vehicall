@@ -85,10 +85,11 @@ exports.updateSingleVehicle = updateSingleVehicle;
 const deleteSingleVehicle = async (req, res) => {
     try {
         const bookingsOfVehicle = await (0, booking_service_1.getBookingByVehicleIdService)(req.params.userId);
+        console.log(bookingsOfVehicle);
         if (bookingsOfVehicle.rows.length !== 0) {
             res.status(409).json({
                 success: false,
-                message: "User cannot be deleted because they have existing bookings"
+                message: "Vehicle cannot be deleted because they have existing bookings"
             });
         }
         const result = await (0, vehicle_service_1.deleteSingleVehicleService)(req.params.vehicleId);

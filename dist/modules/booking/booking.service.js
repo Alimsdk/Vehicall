@@ -10,8 +10,11 @@ const makeBookingService = async (payload) => {
     const MS_PER_DAY = 24 * 60 * 60 * 1000;
     const rentedDays = Math.floor((end.getTime() - start.getTime()) / MS_PER_DAY);
     const res = await (0, vehicle_service_1.getSingleVehicleService)(vehicle_id);
+    if (res.rows.length === 0) {
+        return null;
+    }
     const { daily_rent_price } = res.rows[0];
-    if (res.rows.length === 0 || !rentedDays || !daily_rent_price) {
+    if (!rentedDays || !daily_rent_price) {
         return null;
     }
     if (start.getTime() >= end.getTime()) {
@@ -38,7 +41,7 @@ const getBookingByUserIdService = async (userId) => {
 };
 exports.getBookingByUserIdService = getBookingByUserIdService;
 const getBookingByVehicleIdService = async (vehicleId) => {
-    const result = await db_1.pool.query(`SELECT * FROM bookings WHERE id=$1`, [vehicleId]);
+    const result = await db_1.pool.query(`SELECT * FROM bookings WHERE vehicle_id=$1`, [vehicleId]);
     return result;
 };
 exports.getBookingByVehicleIdService = getBookingByVehicleIdService;
